@@ -1,34 +1,28 @@
-import React, { Component } from 'react';
+import { useState } from 'react';
 import { Header, SearchForm, FormButton, Input } from './SearchBar.styled';
 import { FcSearch } from 'react-icons/fc';
 import {toast, Toaster} from 'react-hot-toast';
 
-export class SearchBar extends Component {
-  state = {
-    searchQuery: '',
+export const SearchBar = ({ onSubmit }) => {
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleChange = event => {
+    setSearchQuery(event.currentTarget.value.toLowerCase());
   };
 
-  onChange = event => {
-    this.setState({
-      searchQuery: event.currentTarget.value.toLowerCase(),
-    });
-  };
-
-  onSubmit = event => {
+  const handleSubmit = event => {
     event.preventDefault();
-    if (this.state.searchQuery.trim() === '') {
+    if (searchQuery.trim() === '') {
       return toast.error('Please enter something');
     }
-    this.props.onSubmit(this.state.searchQuery);
-    this.setState({ searchQuery: '' });
+    onSubmit(searchQuery);
+    setSearchQuery('');
   };
 
-  render() {
     return (
-      
       <Header >
         <Toaster />
-   <SearchForm onSubmit={this.onSubmit}>
+   <SearchForm onSubmit={handleSubmit}>
           <FormButton type="submit">
             <FcSearch size={25}/>
     </FormButton>
@@ -39,12 +33,11 @@ export class SearchBar extends Component {
       autoComplete="off"
       autoFocus
       placeholder="Search images and photos"
-      value={this.state.searchQuery}
-      onChange={this.onChange}
+      value={searchQuery}
+      onChange={handleChange}
     />
   </SearchForm>
       </Header>
-      
     );
   }
-}
+
