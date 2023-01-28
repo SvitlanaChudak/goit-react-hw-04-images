@@ -6,6 +6,11 @@ const modalRoot = document.querySelector('#modal-root');
 
 export const Modal = ({ largeImageURL, onClose }) => {
   useEffect(() => {
+      const handleKeyDown = event => {
+    if (event.code === 'Escape') {
+      onClose();
+    }
+  };
     window.addEventListener('keydown', handleKeyDown);
 
     return () => {
@@ -13,11 +18,7 @@ export const Modal = ({ largeImageURL, onClose }) => {
     };
   });
 
-  const handleKeyDown = event => {
-    if (event.code === 'Escape') {
-      onClose();
-    }
-  };
+
 
   const handleBackDropClick = event => {
     if (event.currentTarget === event.target) {

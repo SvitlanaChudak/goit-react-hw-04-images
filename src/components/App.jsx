@@ -22,11 +22,8 @@ export const App = () => {
 
   const per_page = 12;
 
-    useEffect(() => {
-    getImages(searchQuery, page);
-  }, [searchQuery, page]);
-
-  const getImages = async (searchQuery, page) => {
+  useEffect(() => {
+      const getImages = async (searchQuery, page) => {
     if (!searchQuery) {
       return;
     }
@@ -49,6 +46,10 @@ export const App = () => {
       setIsLoading(false);
     }
   };
+    getImages(searchQuery, page);
+  }, [searchQuery, page]);
+
+  
 
     const onFormSubmit = searchQuery => {
       setSearchQuery(searchQuery);
